@@ -5,7 +5,7 @@
     <NoWarn>CS0169;CS0067;CS0649</NoWarn>
     <DisableFody>true</DisableFody>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Nullable>false</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
   <ItemGroup>
     <Using Remove="System.Net.Http" />
