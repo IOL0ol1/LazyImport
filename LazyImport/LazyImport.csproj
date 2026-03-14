@@ -10,11 +10,13 @@
     <PackageTags>DllImport, ILWeaving, API, Fody, Cecil, AOP</PackageTags>
     <PackageOutputPath>$(SolutionDir)nugets</PackageOutputPath>
     <PackageIcon>package_icon.png</PackageIcon>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
     <PackageProjectUrl>https://github.com/IOL0ol1/LazyImport</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\package_icon.png" Pack="true" PackagePath="\" />
+    <None Include="..\readme.md" Pack="true" PackagePath="\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Fody" Version="6.9.3" PrivateAssets="none" />
