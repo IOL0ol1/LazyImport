@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net48;net8.0</TargetFrameworks>
+    <NoWarn>CS0169;CS0067;CS0649</NoWarn>
+    <DisableFody>true</DisableFody>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Nullable>false</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <Using Remove="System.Net.Http" />
+    <ProjectReference Include="..\LazyImport\LazyImport.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:complexType xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:sequence>
+    <xs:element name="Library" minOccurs="0" maxOccurs="unbounded">
+      <xs:annotation>
+        <xs:documentation>
+          Configures processing mode for a native library.
+
+          Two modes are available:
+          - Dynamic mode (default): Converts [DllImport] methods to dynamic loading with Initialize() injection
+          - Static mode: Replaces library name in [DllImport] for static linking scenarios
+
+          Example Dynamic mode:
+            &lt;Library Name="mylib" InitMethod="Initialize" Include="api_*" /&gt;
+
+          Example Static mode (iOS/Xamarin):
+            &lt;Library Name="mylib" ReplaceName="__Internal" /&gt;
+        </xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+        <xs:attribute name="Name" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>
+              Native library name to match (case-insensitive).
+              Extensions (.dll, .so, .dylib) are stripped before comparison.
+
+              Example: "mylib" matches "mylib.dll", "libmylib.so", "mylib.dylib"
+            </xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="InitMethod" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>
+              [Dynamic mode] Name of the injected Initialize method.
+              Default: "Initialize"
+
+              Creates two overloads:
+              - Initialize(string libraryPath)
+              - Initialize(IntPtr libraryHandle)
+
+              Uses delegate-based dynamic loading to preserve full MarshalInfo support.
+              Function pointers are only used when method signature contains delegate* unmanaged.
+
+              Note: Mutually exclusive with ReplaceName.
+              Example: InitMethod="InitMyLib"
+            </xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ReplaceName" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>
+              [Static mode] Replacement library name for [DllImport].
+
+              Use "__Internal" for iOS/Xamarin static linking.
+              Preserves all PInvokeInfo attributes (calling convention, charset, etc.).
+
+              Note: Mutually exclusive with InitMethod.
+              Example: ReplaceName="__Internal"
+            </xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Include" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>
+              Semicolon-separated Glob patterns for method names to include.
+
+              Wildcards:
+              - * matches any character sequence
+              - ? matches any single character
+
+              If specified, only methods matching at least one pattern are transformed.
+              Applied before Exclude filtering.
+
+              Example: Include="test_basic_*;test_string_*"
+              Example: Include="api_*;helper_?"
+            </xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Exclude" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>
+              Semicolon-separated Glob patterns for method names to exclude.
+
+              Wildcards:
+              - * matches any character sequence
+              - ? matches any single character
+
+              Methods matching any pattern are skipped.
+              Applied after Include filtering.
+
+              Example: Exclude="*_deprecated;*_internal"
+              Example: Exclude="old_*;legacy_*"
+            </xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:complexType>
+    </xs:element>
+  </xs:sequence>
+</xs:complexType>
