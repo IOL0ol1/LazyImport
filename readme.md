@@ -16,6 +16,23 @@ Install the [LazyImport.Fody NuGet package](https://nuget.org/packages/LazyImpor
 PM> Install-Package Fody
 PM> Install-Package LazyImport.Fody
 ```
+
+### Preview
+DllImport methods are converted automatically.
+![Code and Assembly](/preview.jpg)
+
+And we are ready to go.
+```csharp
+static void Main(string[] args)
+{
+    // Add runtime load the library.
+    NativeMethods.Initialize("path/to/mylib.dll"); 
+    // Just like DllImport
+    var p = new MyPoint();
+    NativeMethods.test_complex_all_attributes("111", new int[] { 1, 2, 3 }, 3, ref p, out int status);
+}
+```
+
  
 ### Add to FodyWeavers.xml
 
