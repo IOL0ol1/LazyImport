@@ -641,10 +641,12 @@ public class ModuleWeaver : BaseModuleWeaver
         var il = InitMethodBody(method);
 
         // Try RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-        var rtInfoType     = FindTypeDefinition("System.Runtime.InteropServices.RuntimeInformation");
-        var osPlatformType = FindTypeDefinition("System.Runtime.InteropServices.OSPlatform");
+        var hasRtInfo = TryFindTypeDefinition(
+            "System.Runtime.InteropServices.RuntimeInformation", out var rtInfoType);
+        var hasOsPlatform = TryFindTypeDefinition(
+            "System.Runtime.InteropServices.OSPlatform", out var osPlatformType);
 
-        if (rtInfoType != null && osPlatformType != null)
+        if (hasRtInfo && hasOsPlatform && rtInfoType != null && osPlatformType != null)
         {
             var windowsProp      = osPlatformType.Properties.FirstOrDefault(p => p.Name == "Windows");
             var isOsPlatformMeth = rtInfoType.Methods
