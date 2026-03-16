@@ -1,6 +1,7 @@
 # ![](/package_icon.png) LazyImport.Fody
 
-[![NuGet Status](https://img.shields.io/nuget/v/LazyImport.Fody.svg)](https://www.nuget.org/packages/LazyImport.Fody/)
+[![NuGet Version](https://img.shields.io/nuget/v/LazyImport.Fody.svg)](https://www.nuget.org/packages/LazyImport.Fody/)
+[![NuGet Downloads](https://img.shields.io/nuget/dt/LazyImport.Fody.svg)](https://www.nuget.org/packages/LazyImport.Fody/)
 
 Convert DllImport methods to runtime loading.
 
@@ -38,7 +39,7 @@ using System;
 using System.Runtime.InteropServices;
 public struct MyPoint
 {
-    public int X
+    public int X;
     public int Y;
     public MyPoint(int x, int y)
     {
